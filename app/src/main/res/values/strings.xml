@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_temperatura">Temperatura</string>
+    <string name="title_umidade">Umidade</string>
+    <string name="title_pressao">Pressão</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+</resources>
