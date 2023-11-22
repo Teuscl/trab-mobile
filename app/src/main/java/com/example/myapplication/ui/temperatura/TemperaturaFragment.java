@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.temperatura;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,39 +23,25 @@ public class TemperaturaFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        temperaturaViewModel = new ViewModelProvider(this).get(TemperaturaViewModel.class);
         binding = FragmentTemperaturaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         final TextView textView = binding.txtTemperatura;
-        temperaturaViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        // Obtenha ou crie o ViewModel específico para este fragmento
-        return root;
-    }
-
-  /*  @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         // Obtenha o ViewModel compartilhado
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        Log.d("TemperaturaFragment", "onCreateView");
 
-        TextView txtTemperatura = view.findViewById(R.id.txtTemperatura);
-
-        // Observe as mudanças no ViewModel compartilhado
-        sharedViewModel.getValorTemperatura().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String temperatura) {
-                Log.d("TemperaturaFragment", "LiveData onChanged: " + temperatura);
-                // Atualize a interface do usuário com os dados recebidos
-                System.out.println("Viem model" + temperatura);
-                txtTemperatura.setText(temperatura);
-
-                // Além disso, se necessário, você pode repassar os dados para o ViewModel específico
-                temperaturaViewModel.updateTemperatura(temperatura);
-            }
+        // Observe as mudanças no LiveData
+        sharedViewModel.getValorTemperatura().observe(getViewLifecycleOwner(), temperatura -> {
+            // Atualize a interface do usuário com os dados recebidos
+            textView.setText(temperatura);
+            Log.d("TemperaturaFragment", "LiveData onChanged: " + temperatura);
         });
 
-    }*/
+        return root;
+    }
+
+
 
     @Override
     public void onDestroyView() {

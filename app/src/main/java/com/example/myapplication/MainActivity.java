@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         username = (EditText) findViewById(R.id.edtLogin);
         password = (EditText) findViewById(R.id.password);
+
+        SharedPreferences sharedPref = getSharedPreferences("dados", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,17 +81,11 @@ public class MainActivity extends AppCompatActivity {
                             String temperatura = dataArray[0];
                             String pressao = dataArray[1];
                             String umidade = dataArray[2];
-
-                            if(sharedViewModel != null){
-
-                                Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + pressao + ", " + umidade);
-
-                                sharedViewModel.setValorTemperatura(temperatura);
-                                sharedViewModel.setValorPressao(pressao);
-                                sharedViewModel.setValorUmidade(umidade);
-
-                            }
-
+                            Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + pressao + ", " + umidade);
+                            editor.putString("temperatura", temperatura);
+                            editor.putString("pressao", pressao);
+                            editor.putString("umidade", umidade);
+                            editor.apply();
                         }
                     });
 

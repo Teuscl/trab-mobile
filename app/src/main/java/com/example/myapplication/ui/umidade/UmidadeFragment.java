@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.umidade;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,38 +27,22 @@ public class UmidadeFragment extends Fragment {
 
         final TextView textView = binding.txtUmidade;
 
+        // Obtenha o ViewModel compartilhado
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        Log.d("UmidadeFragment", "onCreateView");
+
+        // Observe as mudanças no LiveData
+        sharedViewModel.getValorUmidade().observe(getViewLifecycleOwner(), umidade -> {
+            textView.setText(umidade);
+            Log.d("UmidadeFragment", "LiveData onChanged: " + umidade);
+        });
 
 
-        // Obtenha ou crie o ViewModel específico para este fragmento
-        umidadeViewModel = new ViewModelProvider(this).get(UmidadeViewModel.class);
 
 
 
         return root;
     }
- /*
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-       super.onViewCreated(view, savedInstanceState);
-        TextView txtUmidade = view.findViewById(R.id.txtUmidade);
-
-        // Obtenha o ViewModel compartilhado
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
-        // Observe as mudanças no ViewModel compartilhado
-        sharedViewModel.getValorUmidade().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String umidade) {
-
-                Log.d("UmidadeFragment", "LiveData onChanged: " + umidade);
-                // Atualize a interface do usuário com os dados recebidos
-                txtUmidade.setText(umidade);
-
-                // Além disso, se necessário, você pode repassar os dados para o ViewModel específico
-                umidadeViewModel.updateUmidade(umidade);
-            }
-        });
-    }*/
 
     @Override
     public void onDestroyView() {

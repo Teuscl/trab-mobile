@@ -63,7 +63,6 @@ public class MqttMain {
                         String newData = UTF_8.decode(publish.getPayload().get()).toString();
                         listener.onNewDataReceived(newData);
 
-
                         //client.disconnect();
                     });
 
@@ -80,8 +79,6 @@ public class MqttMain {
             @Override
             protected void onPostExecute(Boolean success) {
                 if (success) {
-
-
                     listener.onConnectionSucess();
 
                 } else {
