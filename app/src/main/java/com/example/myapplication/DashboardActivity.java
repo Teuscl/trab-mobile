@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
                 R.id.navigation_temperatura, R.id.navigation_umidade, R.id.navigation_pressao)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0398fc")));
+        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8C3333")));
 
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
@@ -52,6 +52,7 @@ public class DashboardActivity extends AppCompatActivity {
                 sharedViewModel.setValorUmidade(sharedPref.getString("umidade", "Nenhuma leitura disponível"));
                 sharedViewModel.setValorPressao(sharedPref.getString("pressao", "Nenhuma leitura disponível"));
                 sharedViewModel.setValorTemperatura(sharedPref.getString("temperatura", "Nenhuma leitura disponível"));
+                sharedViewModel.setTimestamp(sharedPref.getString("timestamp", "Nenhum registro disponível"));
             }
         };
 

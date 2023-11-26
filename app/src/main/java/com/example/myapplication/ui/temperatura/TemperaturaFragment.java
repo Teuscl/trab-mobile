@@ -26,6 +26,7 @@ public class TemperaturaFragment extends Fragment {
         binding = FragmentTemperaturaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         final TextView textView = binding.txtTemperatura;
+        final TextView time = binding.txtUltimaLeitura;
 
         // Obtenha o ViewModel compartilhado
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -36,6 +37,10 @@ public class TemperaturaFragment extends Fragment {
             // Atualize a interface do usuário com os dados recebidos
             textView.setText(temperatura);
             Log.d("TemperaturaFragment", "LiveData onChanged: " + temperatura);
+        });
+
+        sharedViewModel.getTimestamp().observe(getViewLifecycleOwner(), timestamp -> {
+            time.setText("Última leitura: " + timestamp);
         });
 
         return root;

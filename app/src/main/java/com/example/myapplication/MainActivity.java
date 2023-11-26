@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intent);
-
                             // Fecha a atividade atual (MainActivity)
                             finish();
                         }
@@ -78,17 +77,23 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
+                        //implementa a interface para tratar o que fazer a cada novo payload recebido
                         @Override
                         public void onNewDataReceived(String data) {
                             // Lide com os novos dados recebidos, por exemplo, atualize a UI ou compartilhe com a DashboardActivity
                             String[] dataArray = data.split(";");
+                            Log.d("MQTT", "Dados: " + data);
                             String temperatura = dataArray[0];
                             String umidade = dataArray[1];
                             String pressao = dataArray[2];
-                            Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + umidade + ", " + pressao);
+                            String timestamp = dataArray[3];
+
+
+                            Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + umidade + ", " + pressao + "," + timestamp);
                             editor.putString("temperatura", temperatura);
                             editor.putString("pressao", pressao);
                             editor.putString("umidade", umidade);
+                            editor.putString("timestamp", timestamp);
                             editor.apply();
                         }
                     });
@@ -99,4 +104,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }

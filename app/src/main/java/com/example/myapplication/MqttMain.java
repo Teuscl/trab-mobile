@@ -6,10 +6,14 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -28,7 +32,6 @@ public class MqttMain {
     public interface MqttConnectListener{
         void onConnectionSucess();
         void onConnectionFailure();
-
         void onNewDataReceived(String data);
 
     }
@@ -56,18 +59,17 @@ public class MqttMain {
                             .topicFilter("dados/")
                             .send();
 
+                    //Função assincrona que fica escutando cada payload que chega no broker e transforma essa mensagem para um formato legível
                     client.toAsync().publishes(ALL, publish -> {
-                        System.out.println("Received message: " +
+                        Log.d("MQTT","Received message: " +
                                 publish.getTopic() + " -> " +
                                 UTF_8.decode(publish.getPayload().get()));
-                        String newData = UTF_8.decode(publish.getPayload().get()).toString();
+                        String timestamp = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(ZonedDateTime.now(ZoneId.of("GMT-3")));
+
+                        String newData = UTF_8.decode(publish.getPayload().get()).toString() + ";" + timestamp;
+
                         listener.onNewDataReceived(newData);
-
-                        //client.disconnect();
                     });
-
-
-
                     return true;
 
                 } catch (Exception e) {

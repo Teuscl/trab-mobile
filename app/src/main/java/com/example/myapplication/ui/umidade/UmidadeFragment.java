@@ -26,6 +26,7 @@ public class UmidadeFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.txtUmidade;
+        final TextView time = binding.txtUltimaLeitura;
 
         // Obtenha o ViewModel compartilhado
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -37,6 +38,9 @@ public class UmidadeFragment extends Fragment {
             Log.d("UmidadeFragment", "LiveData onChanged: " + umidade);
         });
 
+        sharedViewModel.getTimestamp().observe(getViewLifecycleOwner(), timestamp -> {
+            time.setText("Última leitura: " + timestamp);
+        });
 
 
 
