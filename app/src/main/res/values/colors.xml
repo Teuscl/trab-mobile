@@ -21,6 +21,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="teste">#8C3333</color>
+    <color name="loginBack">#1D253A</color>
+    <color name="loginComponents">#213E8A</color>
+
 
     <color name="barra_superior">#0398fc</color>
 </resources>

@@ -24,19 +24,22 @@ public class SharedViewModel extends ViewModel {
     }
 
     public void setValorTemperatura(String temperatura) {
-        this.valorTemperatura.postValue(temperatura);
+        this.valorTemperatura.postValue(temperatura + "°C");
         Log.d("SharedViewModel", "Temperatura atualizada: " + temperatura);
 
     }
 
     public void setValorPressao(String pressao) {
-        this.valorPressao.postValue(pressao);
+        this.valorPressao.postValue(pressao + "kPa");
         Log.d("SharedViewModel", "Pressão atualizada: " + pressao);
 
     }
 
     public void setValorUmidade(String umidade) {
-        this.valorUmidade.postValue(umidade);
+        double conversao = Double.parseDouble(umidade);
+        conversao = conversao * 100;
+        umidade = Double.toString(conversao);
+        this.valorUmidade.postValue(umidade + "%");
         Log.d("SharedViewModel", "Umidade atualizada: " + umidade);
 
     }

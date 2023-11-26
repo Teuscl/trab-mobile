@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,8 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
@@ -79,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
                             // Lide com os novos dados recebidos, por exemplo, atualize a UI ou compartilhe com a DashboardActivity
                             String[] dataArray = data.split(";");
                             String temperatura = dataArray[0];
-                            String pressao = dataArray[1];
-                            String umidade = dataArray[2];
-                            Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + pressao + ", " + umidade);
+                            String umidade = dataArray[1];
+                            String pressao = dataArray[2];
+                            Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + umidade + ", " + pressao);
                             editor.putString("temperatura", temperatura);
                             editor.putString("pressao", pressao);
                             editor.putString("umidade", umidade);
