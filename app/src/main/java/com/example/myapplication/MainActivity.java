@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.connect(MainActivity.this, new MqttMain.MqttConnectListener() {
                         @Override
                         public void onConnectionSucess() {
-                            Toast.makeText(MainActivity.this, "Login bem-sucedido", Toast.LENGTH_LONG).show();
+                            showToastSuccessful();
 
                             Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intent);
@@ -73,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onConnectionFailure() {
-                            Toast.makeText(MainActivity.this, "Erro na tentativa de criar o Cliente MQTT. Tente novamente!", Toast.LENGTH_LONG).show();
+                            showToastError();
+                            //Toast.makeText(MainActivity.this, "Erro na tentativa de criar o Cliente MQTT. Tente novamente!", Toast.LENGTH_LONG).show();
 
                         }
 
@@ -103,6 +106,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showToastSuccessful() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast_login_sucessful, null);
+
+        ImageView icon = layout.findViewById(R.id.toast_icon_sucessful);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    private void showToastError() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_login_fail, null);
+
+        ImageView icon = layout.findViewById(R.id.toast_icon_error);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
 }
