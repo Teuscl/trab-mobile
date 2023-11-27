@@ -64,6 +64,6 @@ public class SharedViewModel extends ViewModel {
 
         this.valorUmidade.postValue(umidade + "%");
         Log.d("SharedViewModel", "Umidade atualizada: " + umidade + "%");
-
     }
+
 }

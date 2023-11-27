@@ -32,17 +32,16 @@ public class UmidadeFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Log.d("UmidadeFragment", "onCreateView");
 
-        // Observe as mudanças no LiveData
+
+
         sharedViewModel.getValorUmidade().observe(getViewLifecycleOwner(), umidade -> {
             textView.setText(umidade);
             Log.d("UmidadeFragment", "LiveData onChanged: " + umidade);
-
         });
 
         sharedViewModel.getTimestamp().observe(getViewLifecycleOwner(), timestamp -> {
             time.setText("Última leitura: " + timestamp);
         });
-
 
 
 
