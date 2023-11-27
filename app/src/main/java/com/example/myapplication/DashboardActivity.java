@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -75,9 +78,20 @@ public class DashboardActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_update) {
-            Toast.makeText(getApplicationContext(), "Atualizado", Toast.LENGTH_SHORT).show();
+            showToastSuccessful();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showToastSuccessful() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast_sobre, null);
+
+        ImageView icon = layout.findViewById(R.id.toast_icon_sucessful);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }
 

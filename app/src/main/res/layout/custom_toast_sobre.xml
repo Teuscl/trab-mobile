@@ -1,0 +1,43 @@
+<!-- res/layout/custom_toast_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/round_corners"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/toast_icon_sucessful"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icone_mamaco"
+        android:layout_marginRight="8dp" />
+
+    <TextView
+        android:id="@+id/toast_text_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="\nAPP criado por:\n"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/toast_text_names"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="-Allan Bastos\n-Alexandre Medici\n-Mateus Carvalho\n-Wilson Bin Rong Luo"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/toast_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="\nVersão: 1.0"
+        android:textSize="14sp" />
+</LinearLayout>
