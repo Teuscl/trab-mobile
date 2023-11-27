@@ -56,7 +56,7 @@ public class MqttMain {
                             .send();
 
                     client.subscribeWith()
-                            .topicFilter("dados/")
+                            .topicFilter("dados")
                             .send();
 
                     //Função assincrona que fica escutando cada payload que chega no broker e transforma essa mensagem para um formato legível

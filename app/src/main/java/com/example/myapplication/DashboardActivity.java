@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
                 R.id.navigation_temperatura, R.id.navigation_umidade, R.id.navigation_pressao)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8C3333")));
+        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#213E8A")));
 
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 

@@ -1,6 +1,10 @@
 package com.example.myapplication;
 
 import android.util.Log;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,8 +19,16 @@ public class SharedViewModel extends ViewModel {
         return timestamp;
     }
     public void setTimestamp(String timestamp) {
-        this.timestamp.postValue(timestamp);
-        Log.d("SharedViewModel", "Timestamp atualizada: " + timestamp);
+
+        long timestampL = Long.parseLong(timestamp) * 1000; // Convertendo para milissegundos
+
+        Date data = new Date(timestampL);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String dataFormatada = sdf.format(data);
+
+        this.timestamp.postValue(dataFormatada);
+        Log.d("SharedViewModel", "Timestamp atualizada: " + dataFormatada);
     }
     public MutableLiveData<String> getValorTemperatura() {
         return valorTemperatura;
@@ -45,14 +57,13 @@ public class SharedViewModel extends ViewModel {
     public void setValorUmidade(String umidade) {
         //Realiza a conversão do valor recebido para porcentagem.
         double conversao = Double.parseDouble(umidade);
-        conversao = conversao * 100;
         //Arredonda o valor para evitar muitas casas decimais.
         conversao = Math.round(conversao*100)/100.0;
         umidade = Double.toString(conversao);
 
 
         this.valorUmidade.postValue(umidade + "%");
-        Log.d("SharedViewModel", "Umidade atualizada: " + umidade);
+        Log.d("SharedViewModel", "Umidade atualizada: " + umidade + "%");
 
     }
 }
