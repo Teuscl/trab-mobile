@@ -64,10 +64,9 @@ public class MqttMain {
                         Log.d("MQTT","Received message: " +
                                 publish.getTopic() + " -> " +
                                 UTF_8.decode(publish.getPayload().get()));
-                        String timestamp = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(ZonedDateTime.now(ZoneId.of("GMT-3")));
 
                         //transforma o payload em UTF_8 e atribui a variavel newData, e concatena com o timestamp do momento em que foi recebido
-                        String newData = UTF_8.decode(publish.getPayload().get()).toString() + ";" + timestamp;
+                        String newData = UTF_8.decode(publish.getPayload().get()).toString();
 
                         //notifica o listener com o novo payload recebido
                         listener.onNewDataReceived(newData);
