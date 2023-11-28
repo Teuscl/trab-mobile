@@ -19,7 +19,6 @@ public class SharedViewModel extends ViewModel {
         return timestamp;
     }
     public void setTimestamp(String timestamp) {
-
         long timestampL = Long.parseLong(timestamp) * 1000; // Convertendo para milissegundos
 
         Date data = new Date(timestampL);

@@ -66,8 +66,10 @@ public class MqttMain {
                                 UTF_8.decode(publish.getPayload().get()));
                         String timestamp = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(ZonedDateTime.now(ZoneId.of("GMT-3")));
 
+                        //transforma o payload em UTF_8 e atribui a variavel newData, e concatena com o timestamp do momento em que foi recebido
                         String newData = UTF_8.decode(publish.getPayload().get()).toString() + ";" + timestamp;
 
+                        //notifica o listener com o novo payload recebido
                         listener.onNewDataReceived(newData);
                     });
                     return true;
@@ -78,6 +80,8 @@ public class MqttMain {
                 }
             }
 
+
+            //Metodo que ocorre imediatamente após o doInBackground, e trata o retorno da função que rodou em background
             @Override
             protected void onPostExecute(Boolean success) {
                 if (success) {

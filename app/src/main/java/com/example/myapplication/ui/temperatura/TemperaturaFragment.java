@@ -17,7 +17,6 @@ import com.example.myapplication.databinding.FragmentTemperaturaBinding;
 public class TemperaturaFragment extends Fragment {
 
     private FragmentTemperaturaBinding binding = null;
-    private TemperaturaViewModel temperaturaViewModel;
     private SharedViewModel sharedViewModel;
 
     @Override
@@ -25,14 +24,16 @@ public class TemperaturaFragment extends Fragment {
 
         binding = FragmentTemperaturaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        //associa os ids do textviews a variaveis, usando o binding
         final TextView textView = binding.txtTemperatura;
         final TextView time = binding.txtUltimaLeitura;
 
-        // Obtenha o ViewModel compartilhado
+        // Obtem o ViewModel compartilhado
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Log.d("TemperaturaFragment", "onCreateView");
 
-        // Observe as mudanças no LiveData
+        // Observe as mudanças no LiveData. Caso haja, atualiza as respectivas variaveis que exibem conteudo na tela do app
         sharedViewModel.getValorTemperatura().observe(getViewLifecycleOwner(), temperatura -> {
             // Atualize a interface do usuário com os dados recebidos
             textView.setText(temperatura);

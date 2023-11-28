@@ -47,14 +47,17 @@ public class DashboardActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#213E8A")));
 
+        //Instancia o shared viewmodel
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
+        //recebe a instancia do sharedpreferences referente ao "dados" que estão sendo alterados a cada payload
         SharedPreferences sharedPref = getSharedPreferences("dados",MODE_PRIVATE);
 
+        //Inicia um listener para ficar monitorando tais mudanças
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-
+                //Quando é notado uma mudança, chama os setter de todas as variaveis presentes do shared ViewModel
                 sharedViewModel.setValorUmidade(sharedPref.getString("umidade", "Nenhuma leitura disponível"));
                 sharedViewModel.setValorPressao(sharedPref.getString("pressao", "Nenhuma leitura disponível"));
                 sharedViewModel.setValorTemperatura(sharedPref.getString("temperatura", "Nenhuma leitura disponível"));
@@ -62,6 +65,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         };
 
+        //registra o ouvinte responsavel por observar o sharedpreferences
         sharedPref.registerOnSharedPreferenceChangeListener(listener);
 
 
@@ -74,16 +78,18 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     @Override
+    //Metódo que é chamado quando algum item do menu é selecionado
     public boolean onOptionsItemSelected(MenuItem item) {
+        //recebe o id do item selecionado
         int id = item.getItemId();
-
+        //compara se é igual ao id do item desejado, caso sejam mostra o toast
         if (id == R.id.menu_update) {
-            showToastSuccessful();
+            showToastInfo();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showToastSuccessful() {
+    private void showToastInfo() {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast_sobre, null);
 

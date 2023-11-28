@@ -28,16 +28,21 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Recebe a action bar presente na MainActivity para poder oculta-la
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        //Instancia o shared viewmodel na MainActivity
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
         username = (EditText) findViewById(R.id.edtLogin);
         password = (EditText) findViewById(R.id.password);
 
+        //Cria ou recupera a sharedpreference chamada dados. MODE_PRIVATE indica que somente o aplicativo que o criou pode acessar
         SharedPreferences sharedPref = getSharedPreferences("dados", MODE_PRIVATE);
+        //Obtem o editor do sharedpreferences para poder editar os dados
         SharedPreferences.Editor editor = sharedPref.edit();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -63,10 +68,11 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     MqttMain handler = new MqttMain(username_input, password_input);
                     handler.connect(MainActivity.this, new MqttMain.MqttConnectListener() {
+                        //Implementa a interface OnConnectionSucess e a OnConnectionFailure, que trata se a conexão deu certo ou errado
                         @Override
                         public void onConnectionSucess() {
+                            //Caso a conexão tenha ocorrido com sucesso, exibe um toast personalizado e inicia a DashboardActivity.
                             showToastSuccessful();
-
                             Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intent);
                             // Fecha a atividade atual (MainActivity)
@@ -75,15 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onConnectionFailure() {
+                            //Exibe um toast personalizado caso ocorra erro na conexão
                             showToastError();
-                            //Toast.makeText(MainActivity.this, "Erro na tentativa de criar o Cliente MQTT. Tente novamente!", Toast.LENGTH_LONG).show();
-
                         }
 
                         //implementa a interface para tratar o que fazer a cada novo payload recebido
                         @Override
                         public void onNewDataReceived(String data) {
-                            // Lide com os novos dados recebidos, por exemplo, atualize a UI ou compartilhe com a DashboardActivity
+                            // Lida com os novos dados recebidos, separando-os em um array e atribuindo seus valores separadamente
                             String[] dataArray = data.split(";");
                             Log.d("MQTT", "Dados: " + data);
                             String temperatura = dataArray[0];
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                             String pressao = dataArray[2];
                             String timestamp = dataArray[3];
 
-
+                            //Insere esses valores no editor do sharedpreferences e confirma as alterações
                             Log.d("MQTT", "Dados recebidos: " + temperatura + ", " + umidade + ", " + pressao + "," + timestamp);
                             editor.putString("temperatura", temperatura);
                             editor.putString("pressao", pressao);
@@ -109,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showToastSuccessful() {
+        //cria um layout personalizado para exibir no toast no caso de sucesso de login
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast_login_sucessful, null);
-
         ImageView icon = layout.findViewById(R.id.toast_icon_sucessful);
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);
@@ -120,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showToastError() {
+        //cria um layout personalizado para exibir no toast no caso de erro de login
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_login_fail, null);
-
         ImageView icon = layout.findViewById(R.id.toast_icon_error);
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);

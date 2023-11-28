@@ -22,7 +22,6 @@ public class PressaoFragment extends Fragment {
 
     private FragmentPressaoBinding binding;
     private SharedViewModel sharedViewModel;
-    private String ultimaLeitura;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,16 +32,14 @@ public class PressaoFragment extends Fragment {
         final TextView textView = binding.txtPressao;
         final TextView time = binding.txtUltimaLeitura;
 
-        // Obtenha o ViewModel compartilhado
+        // Obtem o ViewModel compartilhado
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         Log.d("PressaoFragment", "onCreateView");
 
-        // Observe as mudanças no LiveData
+        // Observe as mudanças no LiveData. Caso haja, atualiza as respectivas variaveis que exibem conteudo na tela do app
         sharedViewModel.getValorPressao().observe(this, pressao -> {
             textView.setText(pressao);
-
-
         });
 
         sharedViewModel.getTimestamp().observe(getViewLifecycleOwner(), timestamp -> {

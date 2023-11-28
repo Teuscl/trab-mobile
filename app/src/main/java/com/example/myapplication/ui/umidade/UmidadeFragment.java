@@ -17,7 +17,6 @@ import com.example.myapplication.databinding.FragmentUmidadeBinding;
 public class UmidadeFragment extends Fragment {
 
     private FragmentUmidadeBinding binding;
-    private UmidadeViewModel umidadeViewModel;
     private SharedViewModel sharedViewModel;
 
     @Override
@@ -25,15 +24,16 @@ public class UmidadeFragment extends Fragment {
         binding = FragmentUmidadeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //associa os ids do textviews a variaveis, usando o binding
         final TextView textView = binding.txtUmidade;
         final TextView time = binding.txtUltimaLeitura;
 
-        // Obtenha o ViewModel compartilhado
+        // Obtem o ViewModel compartilhado
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Log.d("UmidadeFragment", "onCreateView");
 
 
-
+        //fica observando se houve mudanças, e caso haja, atualiza as respectivas variaveis que exibem conteudo na tela do app
         sharedViewModel.getValorUmidade().observe(getViewLifecycleOwner(), umidade -> {
             textView.setText(umidade);
             Log.d("UmidadeFragment", "LiveData onChanged: " + umidade);
@@ -42,8 +42,6 @@ public class UmidadeFragment extends Fragment {
         sharedViewModel.getTimestamp().observe(getViewLifecycleOwner(), timestamp -> {
             time.setText("Última leitura: " + timestamp);
         });
-
-
 
         return root;
     }
