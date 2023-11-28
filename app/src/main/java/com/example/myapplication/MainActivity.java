@@ -81,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onConnectionFailure() {
-                            //Exibe um toast personalizado caso ocorra erro na conexão
+                            //Exibe um toast personalizado caso ocorra erro na conexão e deixa os editText em branco novamente
                             showToastError();
+                            username.setText("");
+                            password.setText("");
                         }
 
                         //implementa a interface para tratar o que fazer a cada novo payload recebido

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,8 +18,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import android.view.MenuItem;
-
 
 import com.example.myapplication.databinding.ActivityDashboardBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,15 +35,20 @@ public class DashboardActivity extends AppCompatActivity {
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Obtem a referencia do BottomNavigation e do navhost
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
 
+        //Obtem o controlador do NavHost instanciado acima, para gerenciar a navegação entre os fragmentos
         NavController navController = navHostFragment.getNavController();
+        //Configura o BottomNavigationView para interagir com o NavController
         NavigationUI.setupWithNavController(navView, navController);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_temperatura, R.id.navigation_umidade, R.id.navigation_pressao)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        //altera a cor da ActionBar
         this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#213E8A")));
 
         //Instancia o shared viewmodel
