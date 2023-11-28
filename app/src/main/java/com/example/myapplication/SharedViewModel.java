@@ -21,6 +21,7 @@ public class SharedViewModel extends ViewModel {
     public void setTimestamp(String timestamp) {
         long timestampL = Long.parseLong(timestamp) * 1000; // Convertendo para milissegundos
 
+        //realiza a conversão do timestamp para um formato legivel
         Date data = new Date(timestampL);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
